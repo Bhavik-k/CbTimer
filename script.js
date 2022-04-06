@@ -16,10 +16,12 @@ const listOfSteps = [
 ];
 
 
-var AllPastTimes = ["--", "--", "--", "--", "--", "--", "--", "--", "--", "--", "--", "--", "--"];
+var AllPastTimes = ["--", "--", "--", "--", "--", "--", "--", "--", "--", "--", "--", "--"];
 
 
 
+AddShuffle()
+setTable()
 
 
 var ShuffleStr = '';
@@ -28,7 +30,6 @@ const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
-AddShuffle()
 async function AddShuffle() {
     const RandNO_NoOfStepsInShuffel = Math.floor(Math.random() * 10) + 1+10
     console.log(RandNO_NoOfStepsInShuffel);
@@ -44,14 +45,22 @@ async function AddShuffle() {
     document.getElementById('TheShuffleText').innerHTML = ShuffleStr;
     document.getElementById('TheShuffleText').classList.remove('animate-pulse')
 }
-AddTime()
+
 function AddTime() {
+    setTable()
+
+    AllPastTimes.push(min + ' : ' + sec + ' . ' + milsec)
+    AllPastTimes = AllPastTimes.slice(1, 13);
+    console.log(AllPastTimes);
+    
+}
+
+function setTable() {
     const TheTable = document.getElementById('TheTable')
     var ab=
     `
         <tr class="table-auto border-2 mx-auto">
-         <th>Name</th>
-         <th>Favorite Color</th>
+         <th class="w-32">Time</th>
         </tr>
     `;
 
@@ -64,14 +73,7 @@ function AddTime() {
         `
     }
     TheTable.innerHTML = ab
-
-    AllPastTimes.push(min + ' : ' + sec + ' . ' + milsec)
-    AllPastTimes = AllPastTimes.slice(1, 13);
-    console.log(AllPastTimes);
-    
 }
-
-
 
 
 
@@ -95,8 +97,8 @@ function startTimer() {
 }
 function stopTimer() {
     if (stoptime == false) {
-        stoptime = true;
         AddTime()
+        stoptime = true;
     }
 }
 function resetTimer() {
